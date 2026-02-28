@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Microsoft AutoGen Labs Guide</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+h2 { color: #34495e; margin-top: 30px; }
+h3 { color: #7f8c8d; }
+code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: "Monaco", monospace; }
+pre { background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 4px solid #3498db; margin: 0; padding-left: 20px; color: #7f8c8d; }
+table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+th { background: #3498db; color: white; }
+tr:nth-child(even) { background: #f9f9f9; }
+</style>
+</head>
+<body>
+<h1>Microsoft AutoGen: Complete Labs Guide</h1>
+<p><em>Build Multi-Agent AI Systems - Hands-On Course</em></p>
+<hr>
+
+<h2>Lab 1: Hello AutoGen - Setting Up Your Environment</h2>
+
+<h3>Objective</h3>
+<p>Set up your development environment and verify AutoGen is working correctly.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Python 3.8+</li>
+<li>OpenAI API Key</li>
+</ul>
+
+<h3>Step 1: Install AutoGen</h3>
+<pre><code>python -m venv autogen-env
+source autogen-env/bin/activate
+pip install pyautogen
+pip install openai python-dotenv</code></pre>
+
+<h3>Step 2: Configure Your API Key</h3>
+<p>Create a .env file:</p>
+<pre><code>OPENAI_API_KEY=your-openai-api-key-here</code></pre>
+
+<h3>Step 3: Verify Your Setup</h3>
+<pre><code>"""Lab 1: Verify AutoGen Installation"""
+import os
+from dotenv import load_dotenv
+import autogen
+
+load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    print("WARNING: OPENAI_API_KEY not found")
+    exit(1)
+
+config_list = [{"model": "gpt-4", "api_key": api_key}]
+
+assistant = autogen.AssistantAgent(
+    name="test_agent",
+    llm_config={"config_list": config_list}
+)
+
+print("AutoGen version:", autogen.__version__)
+print("AssistantAgent created successfully!")
+print("All checks passed!")</code></pre>
+
+<hr>
+
+<h2>Lab 2: Agent Conversations</h2>
+
+<h3>Objective</h3>
+<p>Build a simple two-agent conversation system.</p>
+
+<pre><code>"""Lab 2: Basic Two-Agent Conversation"""
+import os
+from dotenv import load_dotenv
+import autogen
+from autogen import AssistantAgent, UserProxyAgent
+
+load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
+
+config_list = [{"model": "gpt-4", "api_key": api_key}]
+
+assistant = AssistantAgent(
+    name="code_assistant",
+    llm_config={"config_list": config_list},
+    system_message="You are a Python expert."
+)
+
+user_proxy = UserProxyAgent(
+    name="human_user",
+    human_input_mode="NEVER",
+    max_consecutive_auto_reply=10,
+    code_execution_config={"work_dir": "code_output", "use_docker": False}
+)
+
+user_proxy.initiate_chat(
+    assistant,
+    message="Create a Python class for managing inventory."
+)</code></pre>
+
+<h3>Human Input Modes</h3>
+<table>
+<tr><th>Mode</th><th>Behavior</th></tr>
+<tr><td>NEVER</td><td>Fully automated</td></tr>
+<tr><td>ALWAYS</td><td>Always ask for input</td></tr>
+<tr><td>TERMINATE</td><td>Ask at termination</td></tr>
+</table>
+
+<hr>
+
+<h2>Lab 3: Tools and Function Calling</h2>
+
+<pre><code>"""Lab 3: Using Tools with AutoGen"""
+import autogen
+
+def get_weather(location: str, unit: str = "celsius") -> str:
+    """Get weather for a location."""
+    weather_data = {
+        "new york": {"celsius": 18, "condition": "Partly cloudy"},
+        "london": {"celsius": 12, "condition": "Rainy"},
+    }
+    location_lower = location.lower()
+    if location_lower in weather_data:
+        data = weather_data[location_lower]
+        return f"{location.title()}: {data['celsius']}C, {data['condition']}"
+    return f"Weather not available for {location}"
+
+# Register function
+autogen.agentchat.register_function(
+    get_weather,
+    name="get_weather",
+    description="Get current weather for a city"
+)</code></pre>
+
+<hr>
+
+<h2>Lab 4: GroupChat</h2>
+
+<pre><code>"""Lab 4: GroupChat"""
+from autogen import GroupChat, GroupChatManager
+
+researcher = AssistantAgent(name="researcher", llm_config={"config_list": config_list})
+writer = AssistantAgent(name="writer", llm_config={"config_list": config_list})
+editor = AssistantAgent(name="editor", llm_config={"config_list": config_list})
+user_proxy = UserProxyAgent(name="user", human_input_mode="NEVER")
+
+groupchat = GroupChat(
+    agents=[user_proxy, researcher, writer, editor],
+    messages=[],
+    max_round=10
+)
+
+manager = GroupChatManager(
+    groupchat=groupchat,
+    llm_config={"config_list": config_list}
+)
+
+user_proxy.initiate_chat(manager, message="Create article about AI.")</code></pre>
+
+<hr>
+
+<h2>Lab 5: Human-in-the-Loop</h2>
+
+<pre><code>"""Lab 5: Human-in-the-Loop"""
+assistant = AssistantAgent(
+    name="assistant",
+    llm_config={"config_list": config_list},
+    system_message="When done, say FINISHED."
+)
+
+user_proxy = UserProxyAgent(
+    name="user",
+    human_input_mode="TERMINATE",
+    max_consecutive_auto_reply=10,
+    is_termination_msg=lambda x: "FINISHED" in x.get("content", "")
+)
+
+user_proxy.initiate_chat(assistant, message="Write a haiku.")</code></pre>
+
+<hr>
+
+<h2>Lab 6: Real-World Applications</h2>
+
+<h3>Code Review System</h3>
+<pre><code>"""Lab 6: Code Review System"""
+reviewer = AssistantAgent(
+    name="reviewer",
+    llm_config={"config_list": config_list},
+    system_message="Review code for bugs, security, quality."
+)
+
+security_expert = AssistantAgent(
+    name="security_expert", 
+    llm_config={"config_list": config_list},
+    system_message="Review for security vulnerabilities."
+)
+
+groupchat = GroupChat(agents=[submitter, reviewer, security_expert])
+manager = GroupChatManager(groupchat=groupchat, llm_config={"config_list": config_list})</code></pre>
+
+<hr>
+
+<h2>Lab 7: Production Patterns</h2>
+
+<h3>Error Handling</h3>
+<pre><code>"""Lab 7: Error Handling"""
+try:
+    user_proxy.initiate_chat(assistant, message="Hello!")
+except Exception as e:
+    print(f"Error: {e}")</code></pre>
+
+<h3>State Management</h3>
+<pre><code>class ConversationState:
+    def __init__(self):
+        self.conversations = {}
+        
+    def save(self, conv_id, messages):
+        self.conversations[conv_id] = messages
+        
+    def export(self, filepath):
+        import json
+        with open(filepath, 'w') as f:
+            json.dump(self.conversations, f)</code></pre>
+
+<hr>
+
+<h2>Quick Reference</h2>
+
+<pre><code># Basic Agents
+from autogen import AssistantAgent, UserProxyAgent
+assistant = AssistantAgent(name="assistant", llm_config={"config_list": config_list})
+user_proxy = UserProxyAgent(name="user", human_input_mode="NEVER")
+
+# Start Conversation
+user_proxy.initiate_chat(assistant, message="Your message")
+
+# GroupChat
+groupchat = GroupChat(agents=[agent1, agent2])
+manager = GroupChatManager(groupchat=groupchat, llm_config={"config_list": config_list})</code></pre>
+
+<hr>
+
+<p><em>Course by Steve Robinson - Alpaca Mango</em></p>
+</body>
+</html>

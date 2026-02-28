@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+h2 { color: #34495e; margin-top: 30px; }
+h3 { color: #7f8c8d; }
+table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+th { background-color: #3498db; color: white; }
+tr:nth-child(even) { background-color: #f2f2f2; }
+pre { background-color: #f5f5f5; padding: 10px; border-radius: 5px; overflow-x: auto; }
+blockquote { border-left: 4px solid #3498db; margin: 0; padding-left: 15px; color: #7f8c8d; }
+</style>
+</head>
+<body>
+<p>= AutoGen Basics - Lab Course Outline</p>
+<p>== Course Overview</p>
+<p>This lab-based course provides a comprehensive introduction to Microsoft's AutoGen framework, enabling students to build sophisticated multi-agent AI applications. Students will progress from basic concepts to building production-ready multi-agent systems through hands-on labs.</p>
+<p><strong>Prerequisites:</strong>
+- Basic Python programming knowledge
+- Familiarity with LLMs (OpenAI, Anthropic, or local models)
+- Understanding of API concepts</p>
+<p><strong>Target Audience:</strong>
+- Developers looking to build AI agent applications
+- DevOps engineers automating workflows with AI
+- Technical professionals exploring multi-agent systems</p>
+<hr />
+<p>== Chapter Structure</p>
+<p>=== 1. Introduction to Multi-Agent AI Systems
+- What are multi-agent systems?
+- AutoGen framework overview
+- Use cases and applications
+- Architecture and components</p>
+<p>=== 2. Setting Up the Development Environment
+- Python environment configuration
+- Installing AutoGen and dependencies
+- API key configuration
+- Local model options (Ollama, LM Studio)</p>
+<p>=== 3. AutoGen Core Concepts
+- Agent types and hierarchies
+- Conversation patterns
+- Message passing between agents
+- Group chat vs. sequential conversations</p>
+<p>=== 4. Building Your First Agent
+- Creating a simple assistant agent
+- Defining agent personalities
+- Basic message handling
+- Testing with simple prompts</p>
+<p>=== 5. Multi-Agent Conversations
+- Two-agent conversations
+- Setting up conversation flow
+- Role-based agent interactions
+- Handling responses and context</p>
+<p>=== 6. Group Chat Configuration
+- GroupChatManager overview
+- Speaker selection strategies
+- Maximum rounds and termination
+- Speaker transition rules</p>
+<p>=== 7. Tool Use and Function Calling
+- Registering custom functions
+- Tool execution flow
+- Building agents with capabilities
+- Real-world tool integration examples</p>
+<p>=== 8. Advanced Conversation Patterns
+- Sequential message passing
+- Nested chats
+- Selective forwarding
+- Custom speaker selection</p>
+<p>=== 9. Human-in-the-Loop Patterns
+- Human intervention modes
+- Auto-reply vs. manual approval
+- Interactive agent scenarios
+- Use cases for human involvement</p>
+<p>=== 10. Building Production Applications
+- Error handling and recovery
+- Logging and monitoring
+- Scaling considerations
+- Best practices</p>
+<hr />
+<p>== Lab Guide (18 Labs)</p>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Environment Setup</td>
+<td>Install Python, AutoGen, and configure API keys</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Your First AutoGen Agent</td>
+<td>Create and run a basic assistant agent</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Two-Agent Conversation</td>
+<td>Set up a conversation between two agents</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Agent with Custom Personality</td>
+<td>Define agent roles and behaviors</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Introduction to Group Chat</td>
+<td>Create a multi-agent group conversation</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Registering Custom Tools</td>
+<td>Add function calling to agents</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Building a Research Assistant</td>
+<td>Create an agent that searches and summarizes</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Coding Agent with Execution</td>
+<td>Build an agent that writes and runs code</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Sequential Chat Patterns</td>
+<td>Implement multi-step workflows</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Nested Chat Architectures</td>
+<td>Build hierarchical agent conversations</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Human-in-the-Loop Patterns</td>
+<td>Add human approval to agent workflows</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Tool Composition</td>
+<td>Chain multiple tools in agent workflows</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Conversational Flow Control</td>
+<td>Custom speaker selection and routing</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Error Handling in Agents</td>
+<td>Graceful failure and recovery strategies</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Building a Chatbot</td>
+<td>Create a customer service agent</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Multi-Tool Research Agent</td>
+<td>Combine search, storage, and analysis</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Capstone - AI Meeting Assistant</td>
+<td>Build a complete meeting summarization system</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Capstone Solution</td>
+<td>Fully worked solution for the capstone</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>== Lab Detail Specifications</p>
+<p>=== Lab 1: Environment Setup
+<strong>Objectives:</strong>
+- Install Python 3.10+ and pip
+- Install autogen package
+- Configure OpenAI/Anthropic API keys
+- Verify installation with test script</p>
+<p><strong>Steps:</strong>
+1. Check Python version
+2. Create virtual environment
+3. Install autogen and dependencies
+4. Set up environment variables
+5. Test basic agent creation</p>
+<hr />
+<p>=== Lab 2: Your First AutoGen Agent
+<strong>Objectives:</strong>
+- Create an AssistantAgent instance
+- Configure the agent with model
+- Send messages and receive responses
+- Understand agent state</p>
+<p><strong>Steps:</strong>
+1. Import AutoGen classes
+2. Configure LLM settings
+3. Create AssistantAgent
+4. Initiate conversation
+5. Process response</p>
+<hr />
+<h3 id="lab-3-two-agent-conversation">Lab 3: Two-Agent Conversation</h3>
+<p><strong>Objectives:</strong>
+- Create two distinct agents
+- Set up conversation flow
+- Exchange messages between agents
+- Observe role-based responses</p>
+<hr />
+<h3 id="lab-4-agent-with-custom-personality">Lab 4: Agent with Custom Personality</h3>
+<p><strong>Objectives:</strong>
+- Define system message for personality
+- Configure agent behavior
+- Test different personas
+- Handle context appropriately</p>
+<hr />
+<h3 id="lab-5-introduction-to-group-chat">Lab 5: Introduction to Group Chat</h3>
+<p><strong>Objectives:</strong>
+- Create GroupChat
+- Add multiple agents
+- Configure GroupChatManager
+- Execute group conversation</p>
+<hr />
+<h3 id="lab-6-registering-custom-tools">Lab 6: Registering Custom Tools</h3>
+<p><strong>Objectives:</strong>
+- Define Python functions as tools
+- Register tools with agent
+- Execute tool calls
+- Process tool results</p>
+<hr />
+<h3 id="lab-7-building-a-research-assistant">Lab 7: Building a Research Assistant</h3>
+<p><strong>Objectives:</strong>
+- Combine web search with summarization
+- Create multi-step workflow
+- Aggregate results
+- Present formatted output</p>
+<hr />
+<h3 id="lab-8-coding-agent-with-execution">Lab 8: Coding Agent with Execution</h3>
+<p><strong>Objectives:</strong>
+- Create agent that generates code
+- Implement code execution
+- Handle output and errors
+- Build REPL-style interaction</p>
+<hr />
+<h3 id="lab-9-sequential-chat-patterns">Lab 9: Sequential Chat Patterns</h3>
+<p><strong>Objectives:</strong>
+- Chain conversations sequentially
+- Pass context between agents
+- Build multi-step pipelines
+- Handle intermediate results</p>
+<hr />
+<h3 id="lab-10-nested-chat-architectures">Lab 10: Nested Chat Architectures</h3>
+<p><strong>Objectives:</strong>
+- Create parent-child agent relationships
+- Delegate tasks to sub-agents
+- Aggregate nested results
+- Manage complexity</p>
+<hr />
+<h3 id="lab-11-human-in-the-loop-patterns">Lab 11: Human-in-the-Loop Patterns</h3>
+<p><strong>Objectives:</strong>
+- Configure human intervention mode
+- Set up approval workflows
+- Test manual override
+- Build interactive systems</p>
+<hr />
+<h3 id="lab-12-tool-composition">Lab 12: Tool Composition</h3>
+<p><strong>Objectives:</strong>
+- Chain multiple tools
+- Create tool pipelines
+- Handle dependent operations
+- Build composite workflows</p>
+<hr />
+<h3 id="lab-13-conversational-flow-control">Lab 13: Conversational Flow Control</h3>
+<p><strong>Objectives:</strong>
+- Implement custom speaker selection
+- Create routing logic
+- Control conversation flow
+- Add conditional transitions</p>
+<hr />
+<h3 id="lab-14-error-handling-in-agents">Lab 14: Error Handling in Agents</h3>
+<p><strong>Objectives:</strong>
+- Handle API failures gracefully
+- Implement retry logic
+- Add fallback strategies
+- Log errors appropriately</p>
+<hr />
+<h3 id="lab-15-building-a-chatbot">Lab 15: Building a Chatbot</h3>
+<p><strong>Objectives:</strong>
+- Create customer service agent
+- Handle FAQs
+- Route complex queries
+- Maintain conversation history</p>
+<hr />
+<h3 id="lab-16-multi-tool-research-agent">Lab 16: Multi-Tool Research Agent</h3>
+<p><strong>Objectives:</strong>
+- Combine search, storage, analysis tools
+- Create comprehensive research workflow
+- Generate reports
+- Persist results</p>
+<hr />
+<h3 id="lab-17-capstone-ai-meeting-assistant">Lab 17: Capstone - AI Meeting Assistant</h3>
+<p><strong>Objectives:</strong>
+- Build complete application
+- Integrate multiple agents
+- Handle real-world scenarios
+- Production-ready code</p>
+<hr />
+<h3 id="lab-18-capstone-solution">Lab 18: Capstone Solution</h3>
+<p><strong>Objectives:</strong>
+- Review complete solution
+- Understand design decisions
+- Learn best practices
+- Extend the application</p>
+<hr />
+<p>== Supporting Materials</p>
+<p>=== Instructor Resources
+- Solution guides for each lab
+- Common issues and troubleshooting
+- Discussion questions
+- Assessment criteria</p>
+<p>=== Setup Requirements
+- Python 3.10+
+- OpenAI API key (or Anthropic/Ollama)
+- 8GB RAM minimum
+- Internet connection</p>
+<hr />
+<p>== Course Progression</p>
+<pre><code>Week 1: Labs 1-4  (Environment → First Agent)
+Week 2: Labs 5-8  (Group Chat → Code Execution)
+Week 3: Labs 9-12 (Advanced Patterns → Tool Composition)
+Week 4: Labs 13-16 (Flow Control → Multi-Tool Agent)
+Week 5: Labs 17-18 (Capstone)
+</code></pre>
+<hr />
+<p>== Technical Notes</p>
+<ul>
+<li>All labs use Python 3.10+</li>
+<li>Compatible with AutoGen 0.2+</li>
+<li>Supports OpenAI, Anthropic, Azure OpenAI, local models</li>
+<li>Labs are platform-agnostic (macOS, Linux, Windows WSL)</li>
+</ul>
+<hr />
+<p>== Assessment</p>
+<ul>
+<li>Completion of all 18 labs</li>
+<li>Capstone project submission</li>
+<li>Code review for best practices</li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>This course provides a hands-on, lab-driven approach to learning AutoGen. Students build practical skills progressively, starting from basic agent creation to building complete multi-agent applications. Upon completion, students will be equipped to develop production-ready AI agent systems using Microsoft's AutoGen framework.</p>
+</body>
+</html>
